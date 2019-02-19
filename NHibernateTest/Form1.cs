@@ -1,5 +1,6 @@
 ﻿using NHibernate;
 using NHibernate.Cfg;
+using NHibernateTest.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,14 @@ namespace NHibernateTest
             myConfiguration.Configure();
             mySessionFactory = myConfiguration.BuildSessionFactory();
             mySession = mySessionFactory.OpenSession();
+
+            using(mySession.BeginTransaction())
+            {
+                Contato loContato = new Contato { Nome="Marcio Silva",Telefone="997061756"};
+                mySession.Save(loContato);
+
+                mySession.Transaction.Commit();
+            }
         }
     }
 }
