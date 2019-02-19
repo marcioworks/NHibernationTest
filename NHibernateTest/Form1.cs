@@ -32,10 +32,21 @@ namespace NHibernateTest
             mySessionFactory = myConfiguration.BuildSessionFactory();
             mySession = mySessionFactory.OpenSession();
 
-            using(mySession.BeginTransaction())
+
+            //add Record
+            //using(mySession.BeginTransaction())
+            //{
+            //    Contato loContato = new Contato { Nome="Marcio Silva",Telefone="997061756"};
+            //    mySession.Save(loContato);
+
+            //    mySession.Transaction.Commit();
+            //}
+
+            //List Contact
+            using (mySession.BeginTransaction())
             {
-                Contato loContato = new Contato { Nome="Marcio Silva",Telefone="997061756"};
-                mySession.Save(loContato);
+                ICriteria criteria = mySession.CreateCriteria<Contato>();
+                IList<Contato>list = criteria.List<Contato>();
 
                 mySession.Transaction.Commit();
             }
